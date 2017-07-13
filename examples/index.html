@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+        <script type="text/javascript" src="selecter.js"></script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+                Selecter('#my-list li', {
+                    on_at_least_one_selection: function() {
+                        $('#btn-move,#btn-delete').removeClass('disabled');
+                    },
+                    on_unselecting_all: function() {
+                        $('#btn-move,#btn-delete').addClass('disabled');
+                    },
+                    check_html: ' <input type="checkbox" style="margin: 10px;"> '
+                });
+
+            });
+        </script>
+
+        <div class="container">
+
+            <ul class="nav">
+                <li class="nav-item">
+                    <a id="btn-add" class="nav-link" href="#">
+                        Add New
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="btn-move" class="nav-link disabled" href="#">
+                        Move
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="btn-delete" class="nav-link disabled" href="#">
+                        Delete
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="list-group" id="my-list">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Morbi leo risus</li>
+                <li class="list-group-item">Porta ac consectetur ac</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+        </div>
+
+    </body>
+</html>
