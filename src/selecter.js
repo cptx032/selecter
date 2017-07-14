@@ -16,56 +16,94 @@ function _default_list(defaults, object_dict) {
 var Selecter = function (jquery_filter, options) {
     this.__selection = [];
     var self = this;
+    if (!options) {
+        options = {};
+    }
+
+    _default_list({
+        select_class: 'active',
+    }, options);
+
+    this.options = options;
+    this.jquery_filter = jquery_filter;
+
     $(jquery_filter).each(function (index, elem) {
         var final_html = $(elem).html();
 
-        if (!options) {
-            options = {};
-        }
-
-        _default_list({
-            select_class: 'active',
-        }, options);
-
         $(elem).click(function(event) {
             if (self.__selection.indexOf(elem) !== -1) {
-                self.__selection.splice(self.__selection.indexOf(elem), 1);
-                $(elem).removeClass(options.select_class);
-
-                if (options.on_unselect) {
-                    options.on_unselect(elem, event);
-                }
-
-                if (options.on_unselecting_all) {
-                    if (self.__selection.length === 0) {
-                        options.on_unselecting_all(elem, event);
-                    }
-                }
+                self.unselect(elem, event);
             }
             else {
-                self.__selection.push(elem);
-                $(elem).addClass(options.select_class);
-
-                if (options.on_select) {
-                    options.on_select(elem, event);
-                }
-
-                if (self.__selection.length === 1) {
-                    if (options.on_at_least_one_selection) {
-                        options.on_at_least_one_selection(elem, event);
-                    }
-                }
-
-                if (self.__selection.length === $(jquery_filter).length) {
-                    if (options.on_select_all) {
-                        options.on_select_all(elem, event);
-                    }
-                }
+                self.select(elem, event);
             }
 
             if (options.on_change) {
                 options.on_change(elem, event);
             }
         });
+    });
+};
+
+Selecter.prototype.unselect = function(elem, event) {
+    this.__selection.splice(this.__selection.indexOf(elem), 1);
+    $(elem).removeClass(this.options.select_class);
+
+    if (this.options.on_unselect) {
+        this.options.on_unselect(elem, event);
+    }
+
+    if (this.options.on_unselecting_all) {
+        if (this.__selection.length === 0) {
+            this.options.on_unselecting_all(elem, event);
+        }
+    }
+};
+
+Selecter.prototype.select = function(elem, event) {
+    this.__selection.push(elem);
+    $(elem).addClass(this.options.select_class);
+
+    if (this.options.on_select) {
+        this.options.on_select(elem, event);
+    }
+
+    if (this.__selection.length === 1) {
+        if (this.options.on_at_least_one_selection) {
+            this.options.on_at_least_one_selection(elem, event);
+        }
+    }
+
+    if (this.__selection.length === $(this.jquery_filter).length) {
+        if (this.options.on_select_all) {
+            this.options.on_select_all(elem, event);
+        }
+    }
+};
+
+Selecter.prototype.unselect_all = function() {
+    while (this.__selection.length > 0) {
+        this.unselect(this.__selection[0], null);
+    }
+};
+
+Selecter.prototype.is_selected = function(elem) {
+    return this.__selection.indexOf(elem) !== -1;
+};
+
+Selecter.prototype.select_all = function(reselect) {
+    if (reselect === undefined) {
+        reselect = false;
+    }
+    var self = this;
+    $(this.jquery_filter).each(function (index, elem) {
+        if (self.is_selected(elem)) {
+            if (reselect) {
+                self.select(elem, null);
+            }
+        }
+        else {
+            self.select(elem, null);
+        }
     });
 };

@@ -14,7 +14,7 @@
         <script type="text/javascript">
             $(document).ready(function() {
 
-                Selecter('#my-list li', {
+                var t = new Selecter('#my-list li', {
                     on_at_least_one_selection: function() {
                         $('#btn-move,#btn-delete').removeClass('disabled');
                     },
@@ -23,7 +23,12 @@
                     },
                     check_html: ' <input type="checkbox" style="margin: 10px;"> '
                 });
-
+                $('#btn-unselect').click(function() {
+                    t.unselect_all();
+                });
+                $('#btn-select').click(function() {
+                    t.select_all();
+                });
             });
         </script>
 
@@ -31,8 +36,13 @@
 
             <ul class="nav">
                 <li class="nav-item">
-                    <a id="btn-add" class="nav-link" href="#">
-                        Add New
+                    <a id="btn-unselect" class="nav-link" href="#">
+                        Unselect all
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="btn-select" class="nav-link" href="#">
+                        Select all
                     </a>
                 </li>
                 <li class="nav-item">
