@@ -24,53 +24,48 @@ var Selecter = function (jquery_filter, options) {
         }
 
         _default_list({
-            add_check: true,
-            check_position: 'left',
-            check_html: ' <input type="checkbox"> '
+            select_class: 'active',
         }, options);
 
-        if (options.add_check) {
-            if (options.check_position === 'left') {
-                final_html = options.check_html + final_html;
-            }
-            else if (options.check_position === 'right') {
-                final_html = final_html + options.check_html;
-            }
-        }
+        $(elem).click(function(event) {
+            if (self.__selection.indexOf(elem) !== -1) {
+                self.__selection.splice(self.__selection.indexOf(elem), 1);
+                $(elem).removeClass(options.select_class);
 
-        $(elem).html(final_html);
+                if (options.on_unselect) {
+                    options.on_unselect(elem, event);
+                }
 
-        $(elem).children().filter(':checkbox').each(function(index, check_elem) {
-            $(check_elem).change(function (event) {
-                if (check_elem.checked) {
-                    self.__selection.push(check_elem);
-
-                    if (options.on_selection) {
-                        options.on_selection(self, check_elem, elem);
+                if (options.on_unselecting_all) {
+                    if (self.__selection.length === 0) {
+                        options.on_unselecting_all(elem, event);
                     }
+                }
+            }
+            else {
+                self.__selection.push(elem);
+                $(elem).addClass(options.select_class);
 
+                if (options.on_select) {
+                    options.on_select(elem, event);
+                }
+
+                if (self.__selection.length === 1) {
                     if (options.on_at_least_one_selection) {
-                        if (self.__selection.length === 1) {
-                            options.on_at_least_one_selection(self, check_elem, elem);
-                        }
+                        options.on_at_least_one_selection(elem, event);
                     }
                 }
-                else {
-                    if (self.__selection.indexOf(check_elem) !== -1) {
-                        self.__selection.splice(self.__selection.indexOf(check_elem), 1);
-                    }
 
-                    if (options.on_unselection) {
-                        options.on_unselection(self, check_elem, elem);
-                    }
-
-                    if (options.on_unselecting_all) {
-                        if (self.__selection.length === 0) {
-                            options.on_unselecting_all(self, check_elem, elem);
-                        }
+                if (self.__selection.length === $(jquery_filter).length) {
+                    if (options.on_select_all) {
+                        options.on_select_all(elem, event);
                     }
                 }
-            });
+            }
+
+            if (options.on_change) {
+                options.on_change(elem, event);
+            }
         });
     });
 };
