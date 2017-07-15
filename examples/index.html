@@ -10,61 +10,165 @@
 
         <script type="text/javascript" src="/src/selecter.js"></script>
     </head>
+    <style type="text/css">
+        .light-grey {
+            background-color: #eee;
+        }
+    </style>
     <body>
         <script type="text/javascript">
-            $(document).ready(function() {
-
-                var t = new Selecter('#my-list li', {
+            $(document).ready(function () {
+                new Selecter('#ex-01 li');
+                new Selecter('#ex-02 li', {
+                    add_mark: true,
+                    mark_html: '<img width="32" style="position: absolute; top: -5px; right: -5px;" class="__mark_icon" src="imgs/check.png">',
+                    mark_class: '__mark_icon',
+                    select_class: ''
+                });
+                var selecter = new Selecter('#ex-03 li', {
+                    add_mark: true,
+                    mark_html: '<img width="32" style="position: absolute; top: -5px; right: -5px;" class="__mark_icon" src="imgs/check.png">',
+                    mark_class: '__mark_icon',
+                    select_class: 'light-grey',
                     on_at_least_one_selection: function() {
                         $('#btn-move,#btn-delete').removeClass('disabled');
                     },
                     on_unselecting_all: function() {
                         $('#btn-move,#btn-delete').addClass('disabled');
-                    },
-                    check_html: ' <input type="checkbox" style="margin: 10px;"> '
+                    }
                 });
                 $('#btn-unselect').click(function() {
-                    t.unselect_all();
+                    selecter.unselect_all();
                 });
                 $('#btn-select').click(function() {
-                    t.select_all();
+                    selecter.select_all();
                 });
             });
         </script>
-
         <div class="container">
+            <h1>Selecter js</h1>
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title">Example</h4>
+                    <p class="card-text">
+                        Use Selecter to make every things selectable (duh).
+                        Try select following itens:
+                    </p>
+                </div>
+                <ul id="ex-01" class="list-group list-group-flush">
+                    <li class="list-group-item">Each item</li>
+                    <li class="list-group-item">of this list</li>
+                    <li class="list-group-item">can be selected</li>
+                </ul>
+                <div class="card-block" style="background-color: #eee;">
+                    <h6>HTML:</h6>
+                        <pre style='color:#000000;'><span style='color:#7f0055; '>&lt;</span><span style='color:#7f0055; font-weight:bold; '>ul</span> id=<span style='color:#2a00ff; '>"my-list"</span> class=<span style='color:#2a00ff; '>"list-group"</span><span style='color:#7f0055; '>></span>
+    <span style='color:#7f0055; '>&lt;</span><span style='color:#7f0055; font-weight:bold; '>li</span> class=<span style='color:#2a00ff; '>"list-group-item"</span><span style='color:#7f0055; '>></span>Each elem<span style='color:#7f0055; '>&lt;/</span><span style='color:#7f0055; font-weight:bold; '>li</span><span style='color:#7f0055; '>></span>
+    <span style='color:#7f0055; '>&lt;</span><span style='color:#7f0055; font-weight:bold; '>li</span> class=<span style='color:#2a00ff; '>"list-group-item"</span><span style='color:#7f0055; '>></span>of this list<span style='color:#7f0055; '>&lt;/</span><span style='color:#7f0055; font-weight:bold; '>li</span><span style='color:#7f0055; '>></span>
+    <span style='color:#7f0055; '>&lt;</span><span style='color:#7f0055; font-weight:bold; '>li</span> class=<span style='color:#2a00ff; '>"list-group-item"</span><span style='color:#7f0055; '>></span>can be selected<span style='color:#7f0055; '>&lt;/</span><span style='color:#7f0055; font-weight:bold; '>li</span><span style='color:#7f0055; '>></span>
+<span style='color:#7f0055; '>&lt;/</span><span style='color:#7f0055; font-weight:bold; '>ul</span><span style='color:#7f0055; '>></span>
+</pre>
 
-            <ul class="nav">
+                    <h6>Javascript</h6>
+                        <pre style='color:#000000;'><span style='color:#7f0055; font-weight:bold; '>var</span> selecter = <span style='color:#7f0055; font-weight:bold; '>new</span> Selecter(<span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>#my-list li</span><span style='color:#2a00ff; '>'</span>);
+</pre>
+                </div>
+            </div> <!-- END CARD -->
+
+            <hr>
+            <h3>Options</h3>
+            <p>
+                Selecter automatically includes the class <strong>active</strong> to the elements selected.
+                In bootstrap, this works, but if you use other html/css framework you can just specify
+                the class that you want to be added:
+            </p>
+            <pre style='color:#000000;'><span style='color:#7f0055; font-weight:bold; '>var</span> selecter = <span style='color:#7f0055; font-weight:bold; '>new</span> Selecter(<span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>#my-list li</span><span style='color:#2a00ff; '>'</span>, {
+    select_class: <span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>light-gray</span><span style='color:#2a00ff; '>'</span>
+});
+</pre>
+            <p>
+                If you want, selecter.js can append a <strong>mark</strong> to each item selected, like an image:
+            </p>
+
+            <pre style='color:#000000;'><span style='color:#7f0055; font-weight:bold; '>new</span> Selecter(<span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>#ex-02 li</span><span style='color:#2a00ff; '>'</span>, {
+    add_mark: <span style='color:#7f0055; font-weight:bold; '>true</span>,
+    mark_html: <span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>&lt;img width="32" style="position: absolute; top: -5px; right: -5px;" class="__mark_icon" src="imgs/check.png"></span><span style='color:#2a00ff; '>'</span>,
+    mark_class: <span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>__mark_icon</span><span style='color:#2a00ff; '>'</span>,
+    select_class: <span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>'</span>
+});
+</pre>
+
+            <ul id="ex-02" class="list-group">
+                <li class="list-group-item">Each item</li>
+                <li class="list-group-item">of this list</li>
+                <li class="list-group-item">can be selected</li>
+            </ul>
+
+            <hr>
+            <h6>callbacks</h6>
+            <p>
+                You want to do something when at least one element in the list is selected,
+                like enable edition/remove buttons? Easy, just include <strong>on_at_least_one_selection</strong>
+                option in constructor
+            </p>
+
+
+            <pre style='color:#000000;'><span style='color:#7f0055; font-weight:bold; '>var</span> selecter = <span style='color:#7f0055; font-weight:bold; '>new</span> Selecter(<span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>#ex-03 li</span><span style='color:#2a00ff; '>'</span>, {
+    add_mark: <span style='color:#7f0055; font-weight:bold; '>true</span>,
+    mark_html: <span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>&lt;img width="32" style="position: absolute; top: -5px; right: -5px;" class="__mark_icon" src="imgs/check.png"></span><span style='color:#2a00ff; '>'</span>,
+    mark_class: <span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>__mark_icon</span><span style='color:#2a00ff; '>'</span>,
+    select_class: <span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>light-grey</span><span style='color:#2a00ff; '>'</span>,
+    on_at_least_one_selection: <span style='color:#7f0055; font-weight:bold; '>function</span>() {
+        $(<span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>#btn-move,#btn-delete</span><span style='color:#2a00ff; '>'</span>).removeClass(<span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>disabled</span><span style='color:#2a00ff; '>'</span>);
+    },
+    on_unselecting_all: <span style='color:#7f0055; font-weight:bold; '>function</span>() {
+        $(<span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>#btn-move,#btn-delete</span><span style='color:#2a00ff; '>'</span>).addClass(<span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>disabled</span><span style='color:#2a00ff; '>'</span>);
+    }
+});
+$(<span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>#btn-unselect</span><span style='color:#2a00ff; '>'</span>).click(<span style='color:#7f0055; font-weight:bold; '>function</span>() {
+    selecter.unselect_all();
+});
+$(<span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>#btn-select</span><span style='color:#2a00ff; '>'</span>).click(<span style='color:#7f0055; font-weight:bold; '>function</span>() {
+    selecter.select_all();
+});
+</pre>
+
+        <ul class="nav">
                 <li class="nav-item">
-                    <a id="btn-unselect" class="nav-link" href="#">
+                    <a id="btn-unselect" class="nav-link" href="javascript:void(0)">
                         Unselect all
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="btn-select" class="nav-link" href="#">
+                    <a id="btn-select" class="nav-link" href="javascript:void(0)">
                         Select all
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="btn-move" class="nav-link disabled" href="#">
+                    <a id="btn-move" class="nav-link disabled" href="javascript:void(0)">
                         Move
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="btn-delete" class="nav-link disabled" href="#">
+                    <a id="btn-delete" class="nav-link disabled" href="javascript:void(0)">
                         Delete
                     </a>
                 </li>
             </ul>
 
-            <ul class="list-group" id="my-list">
+            <ul class="list-group" id="ex-03">
                 <li class="list-group-item">Cras justo odio</li>
                 <li class="list-group-item">Dapibus ac facilisis in</li>
                 <li class="list-group-item">Morbi leo risus</li>
                 <li class="list-group-item">Porta ac consectetur ac</li>
                 <li class="list-group-item">Vestibulum at eros</li>
             </ul>
-        </div>
 
+            <hr>
+            <h3>
+                Use at your own risk. Enjoy :D
+            </h3>
+
+        </div> <!-- END CONTAINER -->
     </body>
 </html>

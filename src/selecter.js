@@ -22,6 +22,9 @@ var Selecter = function (jquery_filter, options) {
 
     _default_list({
         select_class: 'active',
+        add_mark: false,
+        mark_html: '',
+        mark_class: ''
     }, options);
 
     this.options = options;
@@ -58,6 +61,10 @@ Selecter.prototype.unselect = function(elem, event) {
             this.options.on_unselecting_all(elem, event);
         }
     }
+
+    if (this.options.add_mark) {
+        $(elem).children().filter('.' + this.options.mark_class).remove();
+    }
 };
 
 Selecter.prototype.select = function(elem, event) {
@@ -78,6 +85,10 @@ Selecter.prototype.select = function(elem, event) {
         if (this.options.on_select_all) {
             this.options.on_select_all(elem, event);
         }
+    }
+
+    if (this.options.add_mark) {
+        $(elem).prepend(this.options.mark_html);
     }
 };
 
