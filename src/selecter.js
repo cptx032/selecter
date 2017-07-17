@@ -118,3 +118,7 @@ Selecter.prototype.select_all = function(reselect) {
         }
     });
 };
+
+Selecter.prototype.get_selection = function() {
+    return this.__selection;
+};
