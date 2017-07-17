@@ -14,7 +14,7 @@ function _default_list(defaults, object_dict) {
 }
 
 var Selecter = function (jquery_filter, options) {
-    this.__selection = [];
+    this.selection = [];
     var self = this;
     if (!options) {
         options = {};
@@ -34,7 +34,7 @@ var Selecter = function (jquery_filter, options) {
         var final_html = $(elem).html();
 
         $(elem).click(function(event) {
-            if (self.__selection.indexOf(elem) !== -1) {
+            if (self.selection.indexOf(elem) !== -1) {
                 self.unselect(elem, event);
             }
             else {
@@ -49,7 +49,7 @@ var Selecter = function (jquery_filter, options) {
 };
 
 Selecter.prototype.unselect = function(elem, event) {
-    this.__selection.splice(this.__selection.indexOf(elem), 1);
+    this.selection.splice(this.selection.indexOf(elem), 1);
     $(elem).removeClass(this.options.select_class);
 
     if (this.options.on_unselect) {
@@ -57,7 +57,7 @@ Selecter.prototype.unselect = function(elem, event) {
     }
 
     if (this.options.on_unselecting_all) {
-        if (this.__selection.length === 0) {
+        if (this.selection.length === 0) {
             this.options.on_unselecting_all(elem, event);
         }
     }
@@ -68,20 +68,20 @@ Selecter.prototype.unselect = function(elem, event) {
 };
 
 Selecter.prototype.select = function(elem, event) {
-    this.__selection.push(elem);
+    this.selection.push(elem);
     $(elem).addClass(this.options.select_class);
 
     if (this.options.on_select) {
         this.options.on_select(elem, event);
     }
 
-    if (this.__selection.length === 1) {
+    if (this.selection.length === 1) {
         if (this.options.on_at_least_one_selection) {
             this.options.on_at_least_one_selection(elem, event);
         }
     }
 
-    if (this.__selection.length === $(this.jquery_filter).length) {
+    if (this.selection.length === $(this.jquery_filter).length) {
         if (this.options.on_select_all) {
             this.options.on_select_all(elem, event);
         }
@@ -93,13 +93,13 @@ Selecter.prototype.select = function(elem, event) {
 };
 
 Selecter.prototype.unselect_all = function() {
-    while (this.__selection.length > 0) {
-        this.unselect(this.__selection[0], null);
+    while (this.selection.length > 0) {
+        this.unselect(this.selection[0], null);
     }
 };
 
 Selecter.prototype.is_selected = function(elem) {
-    return this.__selection.indexOf(elem) !== -1;
+    return this.selection.indexOf(elem) !== -1;
 };
 
 Selecter.prototype.select_all = function(reselect) {
@@ -117,8 +117,4 @@ Selecter.prototype.select_all = function(reselect) {
             self.select(elem, null);
         }
     });
-};
-
-Selecter.prototype.get_selection = function() {
-    return this.__selection;
 };
