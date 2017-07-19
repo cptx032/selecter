@@ -24,7 +24,8 @@ var Selecter = function (jquery_filter, options) {
         select_class: 'active',
         add_mark: false,
         mark_html: '',
-        mark_class: ''
+        mark_class: '',
+        enable_ctrl: false
     }, options);
 
     this.options = options;
@@ -34,15 +35,19 @@ var Selecter = function (jquery_filter, options) {
         var final_html = $(elem).html();
 
         $(elem).click(function(event) {
+            var can_change = true;
+            if (self.options.enable_ctrl && !event.ctrlKey) {
+                can_change = false;
+            }
             if (self.selection.indexOf(elem) !== -1) {
-                self.unselect(elem, event);
+                if (can_change) {
+                    self.unselect(elem, event);
+                }
             }
             else {
-                self.select(elem, event);
-            }
-
-            if (options.on_change) {
-                options.on_change(elem, event);
+                if (can_change) {
+                    self.select(elem, event);
+                }
             }
         });
     });
@@ -64,6 +69,10 @@ Selecter.prototype.unselect = function(elem, event) {
 
     if (this.options.add_mark) {
         $(elem).children().filter('.' + this.options.mark_class).remove();
+    }
+
+    if (this.options.on_change) {
+        this.options.on_change(elem, event, false);
     }
 };
 
@@ -89,6 +98,10 @@ Selecter.prototype.select = function(elem, event) {
 
     if (this.options.add_mark) {
         $(elem).prepend(this.options.mark_html);
+    }
+
+    if (this.options.on_change) {
+        this.options.on_change(elem, event, true);
     }
 };
 

@@ -30,6 +30,7 @@
                     mark_html: '<img width="32" style="position: absolute; top: -5px; right: -5px;" class="__mark_icon" src="imgs/check.png">',
                     mark_class: '__mark_icon',
                     select_class: 'light-grey',
+                    enable_ctrl: true,
                     on_at_least_one_selection: function() {
                         $('#btn-move,#btn-delete').removeClass('disabled');
                     },
@@ -109,7 +110,7 @@
             <p>
                 You want to do something when at least one element in the list is selected,
                 like enable edition/remove buttons? Easy, just include <strong>on_at_least_one_selection</strong>
-                option in constructor
+                option in constructor. Use control to select items
             </p>
 
 
@@ -117,6 +118,7 @@
     add_mark: <span style='color:#7f0055; font-weight:bold; '>true</span>,
     mark_html: <span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>&lt;img width="32" style="position: absolute; top: -5px; right: -5px;" class="__mark_icon" src="imgs/check.png"></span><span style='color:#2a00ff; '>'</span>,
     mark_class: <span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>__mark_icon</span><span style='color:#2a00ff; '>'</span>,
+    enable_ctrl: <span style='color:#7f0055; font-weight:bold; '>true</span>,
     select_class: <span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>light-grey</span><span style='color:#2a00ff; '>'</span>,
     on_at_least_one_selection: <span style='color:#7f0055; font-weight:bold; '>function</span>() {
         $(<span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>#btn-move,#btn-delete</span><span style='color:#2a00ff; '>'</span>).removeClass(<span style='color:#2a00ff; '>'</span><span style='color:#2a00ff; '>disabled</span><span style='color:#2a00ff; '>'</span>);
