@@ -36,7 +36,7 @@ var Selecter = function (jquery_filter, options) {
 
         $(elem).click(function(event) {
             var can_change = true;
-            if (self.options.enable_ctrl && !event.ctrlKey) {
+            if (options.enable_ctrl && !event.ctrlKey) {
                 can_change = false;
             }
             if (self.selection.indexOf(elem) !== -1) {
@@ -45,6 +45,11 @@ var Selecter = function (jquery_filter, options) {
                 }
             }
             else {
+                if (options.validate_selection) {
+                    if (!options.validate_selection(elem, event)) {
+                        can_change = false;
+                    }
+                }
                 if (can_change) {
                     self.select(elem, event);
                 }

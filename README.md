@@ -5,6 +5,8 @@
 Selecter is made to select anything in a web page. You must give to it a jquery filter that
 returns the elements that will be selectable and is it!
 
+After created the object all select items are available by `selection` property.
+
 ### Options
 
 #### select_class
@@ -88,6 +90,20 @@ This function is called when the first item is selected.
 new Selecter('ul li', {
     on_at_least_one_selection: function(html_element, js_event) {
         enable_all_item_edition_buttons();
+    }
+});
+```
+
+#### validate_selection
+This functions is called before any selection. If defined, the item will be selected
+only if this function returns true
+```javascript
+new Selecter('ul li', {
+    validate_selection: function(html_element, js_event) {
+        if (html_element.classList.contains('wrong_class')) {
+            return false;
+        }
+        returns true;
     }
 });
 ```
