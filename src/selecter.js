@@ -46,11 +46,6 @@ var Selecter = function (jquery_filter, options) {
                 }
             }
             else {
-                if (options.validate_selection) {
-                    if (!options.validate_selection(elem, event)) {
-                        can_change = false;
-                    }
-                }
                 if (can_change) {
                     if (options.enable_radio_button) {
                         self.unselect_all();
@@ -86,6 +81,12 @@ Selecter.prototype.unselect = function(elem, event) {
 };
 
 Selecter.prototype.select = function(elem, event) {
+    if (this.options.validate_selection) {
+        if (!this.options.validate_selection(elem, event)) {
+            return;
+        }
+    }
+
     this.selection.push(elem);
     $(elem).addClass(this.options.select_class);
 
