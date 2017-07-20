@@ -25,7 +25,8 @@ var Selecter = function (jquery_filter, options) {
         add_mark: false,
         mark_html: '',
         mark_class: '',
-        enable_ctrl: false
+        enable_ctrl: false,
+        enable_radio_button: false
     }, options);
 
     this.options = options;
@@ -51,6 +52,9 @@ var Selecter = function (jquery_filter, options) {
                     }
                 }
                 if (can_change) {
+                    if (options.enable_radio_button) {
+                        self.unselect_all();
+                    }
                     self.select(elem, event);
                 }
             }

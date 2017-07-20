@@ -24,6 +24,11 @@ By default, any click in element will selects it. But you can configures selecte
 to select elements only when control key is pressed. This is done by setting 'enable_ctrl'
 to `true`.
 
+#### enable_radio_button
+This options enables a "radio button behaviour", that is, only one element must be selected
+at a time. The default is `false`. The function `unselect_all` is called by this function
+to unselect all items, so the callback `on_unselect` can be called many times.
+
 #### add_mark
 In selecter a "mark" is a HTML element that is appended to selected item. This is usefull
 when you want show a image with a "check" or things like that. "add_mark" works together
