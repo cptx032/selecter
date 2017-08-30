@@ -2,6 +2,8 @@
   <img src="logo/logo.png?raw=true" alt="Selecter logo"/>
 </p>
 
+Example here: https://cptx032.github.io/selecter/index.html
+
 Selecter is made to select anything in a web page. You must give to it a jquery filter that
 returns the elements that will be selectable and is it!
 
